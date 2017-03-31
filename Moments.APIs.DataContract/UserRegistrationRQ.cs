@@ -1,15 +1,11 @@
 ﻿using System.Collections.Generic;
+using Moments.APIs.DataContract;
 
-namespace Moments.APis.DataContract
+namespace Moments.APIs.DataContract
 {
     public class UserRegistrationRQ
     {
-        public string UserId { get; set; }
-        public UserName UserName { get; set; }
-        public string Email { get; set; }
-        public Gender Gender { get; set; }
-        public string ProfilePic { get; set; }
-        public List<string> FriendsList { get; set; }
+        private User User { get; set; }
     }
 
     public enum Gender

@@ -1,4 +1,4 @@
-﻿namespace Moments.APis.DataContract
+﻿namespace Moments.APIs.DataContract
 {
     public class UserName
     {

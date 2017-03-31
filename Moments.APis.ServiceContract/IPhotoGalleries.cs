@@ -2,13 +2,14 @@
 
 using Moments.APIs.DataContract;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace Moments.APIs.ServiceContract
 {
-    interface IPhotoGalleries
+    public interface IPhotoGalleries
     {
-        bool SavePhotosDetail(PhotosDetail photosDetail);
+        Task<bool> SavePhotosDetail(PhotosDetail photosDetail);
 
-        List<PhotosDetailRS> GetPhotosList(PhotosDetailRQ PhotosDetailRQ);
+        Task<List<PhotosDetailRS>> GetPhotosList(PhotosDetailRQ photosDetailRQ);
     }
 }

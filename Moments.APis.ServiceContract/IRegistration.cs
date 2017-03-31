@@ -1,8 +1,8 @@
-﻿using Moments.APis.DataContract;
+﻿using Moments.APIs.DataContract;
 
-namespace Moments.APis.ServiceContract
+namespace Moments.APIs.ServiceContract
 {
-    interface IRegistration
+    public interface IRegistration
     {
         bool SaveUserData(UserRegistrationRQ userRegistrationRQ);
 
