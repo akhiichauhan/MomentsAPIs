@@ -1,4 +1,7 @@
-﻿namespace Moments.APIs.DataContract
+﻿using System.Collections.Generic;
+using Moments.APIs.DataContract;
+
+namespace Moments.APIs.DataContract
 {
     public class UserRegistrationRQ
     {
