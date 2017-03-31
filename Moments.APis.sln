@@ -27,6 +27,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Moments.Data.MySqlDataSourc
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Moments.MySqlDb.UnitTest", "Moments.MySqlDataSource.UnitTest\Moments.MySqlDb.UnitTest.csproj", "{88A99F19-C417-4BF9-9017-E1B708F3DC32}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Moments.AmazonAPIs.Test", "Moments.AmazonAPIs.Test\Moments.AmazonAPIs.Test.csproj", "{61A66AC5-E8D5-4E30-81D7-AD2FF840A13E}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -79,6 +81,14 @@ Global
 		{88A99F19-C417-4BF9-9017-E1B708F3DC32}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{88A99F19-C417-4BF9-9017-E1B708F3DC32}.Release|Any CPU.Build.0 = Release|Any CPU
 		{88A99F19-C417-4BF9-9017-E1B708F3DC32}.Stage|Any CPU.ActiveCfg = Release|Any CPU
+		{61A66AC5-E8D5-4E30-81D7-AD2FF840A13E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{61A66AC5-E8D5-4E30-81D7-AD2FF840A13E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{61A66AC5-E8D5-4E30-81D7-AD2FF840A13E}.Prod|Any CPU.ActiveCfg = Release|Any CPU
+		{61A66AC5-E8D5-4E30-81D7-AD2FF840A13E}.Prod|Any CPU.Build.0 = Release|Any CPU
+		{61A66AC5-E8D5-4E30-81D7-AD2FF840A13E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{61A66AC5-E8D5-4E30-81D7-AD2FF840A13E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{61A66AC5-E8D5-4E30-81D7-AD2FF840A13E}.Stage|Any CPU.ActiveCfg = Release|Any CPU
+		{61A66AC5-E8D5-4E30-81D7-AD2FF840A13E}.Stage|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -90,5 +100,6 @@ Global
 		{F970D601-FF65-4548-924B-CFE1A97C1D05} = {9A803625-0B9B-426D-A16C-EE1639B44FD7}
 		{00B2ED18-1B85-43DA-A824-CB92D2C8B8E8} = {40C94AD3-2D7E-4610-A22B-7F52090675C5}
 		{88A99F19-C417-4BF9-9017-E1B708F3DC32} = {0361366E-B22E-42E9-8008-62CBAC419257}
+		{61A66AC5-E8D5-4E30-81D7-AD2FF840A13E} = {0361366E-B22E-42E9-8008-62CBAC419257}
 	EndGlobalSection
 EndGlobal
