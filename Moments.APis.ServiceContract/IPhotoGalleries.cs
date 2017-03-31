@@ -5,7 +5,7 @@ using System.Collections.Generic;
 
 namespace Moments.APIs.ServiceContract
 {
-    interface IPhotoGalleries
+    public interface IPhotoGalleries
     {
         bool SavePhotosDetail(PhotosDetail photosDetail);
 

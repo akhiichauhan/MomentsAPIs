@@ -2,7 +2,7 @@
 
 namespace Moments.APis.ServiceContract
 {
-    interface IRegistration
+    public interface IRegistration
     {
         bool SaveUserData(UserRegistrationRQ userRegistrationRQ);
 
