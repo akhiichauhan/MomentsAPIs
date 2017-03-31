@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="0c75beaf59554223b6fd0b4316470438" Name="Diagram1">
+        <EntityTypeShape EntityType="momentsModel.person" Width="1.5" PointX="0.75" PointY="2.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="momentsModel.photo" Width="1.5" PointX="5.25" PointY="1.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="momentsModel.phototag" Width="1.5" PointX="7.5" PointY="1.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="momentsModel.user" Width="1.5" PointX="3" PointY="1.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="momentsModel.friend" Width="1.5" PointX="5.25" PointY="4.125" IsExpanded="true" />
+        <AssociationConnector Association="momentsModel.People_user" ManuallyRouted="false" />
+        <AssociationConnector Association="momentsModel.person_phototags" ManuallyRouted="false" />
+        <AssociationConnector Association="momentsModel.photo_phototags" ManuallyRouted="false" />
+        <AssociationConnector Association="momentsModel.user_Photos" ManuallyRouted="false" />
+        <AssociationConnector Association="momentsModel.user_friend" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>
