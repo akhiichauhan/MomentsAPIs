@@ -202,17 +202,11 @@
   <ItemGroup>
     <Compile Include="App_Start\JsonNetTextFormatter.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
-    <Compile Include="Controllers\MarkupController.cs" />
-    <Compile Include="Filters\ApiMeterAttribute.cs" />
-    <Compile Include="Filters\LogExceptionFilterAttribute.cs" />
-    <Compile Include="Filters\ExceptionResponseFilterAttribute.cs" />
-    <Compile Include="Filters\LogActionFilterAttribute.cs" />
+    <Compile Include="Controllers\PhotoController.cs" />
+    <Compile Include="Controllers\RegistrationController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Handler\CustomSerializer.cs" />
-    <Compile Include="Handler\MonitoringDelegate.cs" />
-    <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />
@@ -233,7 +227,20 @@
       <DependentUpon>Web.config</DependentUpon>
     </None>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <ProjectReference Include="..\Moments.APIs.Core\Moments.APIs.Core.csproj">
+      <Project>{f970d601-ff65-4548-924b-cfe1a97c1d05}</Project>
+      <Name>Moments.APIs.Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Moments.APIs.DataContract\Moments.APIs.DataContract.csproj">
+      <Project>{8363fe7d-f413-4e34-9276-a9c62eee394f}</Project>
+      <Name>Moments.APIs.DataContract</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Moments.APis.ServiceContract\Moments.APIs.ServiceContract.csproj">
+      <Project>{750a8529-528b-46b2-bdf9-4ba336f1446e}</Project>
+      <Name>Moments.APIs.ServiceContract</Name>
+    </ProjectReference>
+  </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>

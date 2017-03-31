@@ -1,9 +1,5 @@
-﻿using System.Net;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using System.Web.Http;
-using Microsoft.Practices.ServiceLocation;
-using Moments.APis.DataContract;
-using Moments.APis.ServiceContract;
 using Moments.APIs.Core;
 using Moments.APIs.DataContract;
 using Moments.APIs.ServiceContract;

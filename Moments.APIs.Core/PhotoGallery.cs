@@ -1,10 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
-using Moments.APis.DataContract;
-using Moments.APis.ServiceContract;
 using Moments.APIs.DataContract;
 using Moments.APIs.ServiceContract;
 
@@ -12,12 +8,12 @@ namespace Moments.APIs.Core
 {
     public class PhotoGallery : IPhotoGalleries
     {
-        public bool SavePhotosDetail(PhotosDetail photosDetail)
+        public Task<bool> SavePhotosDetail(PhotosDetail photosDetail)
         {
             throw new NotImplementedException();
         }
 
-        public List<PhotosDetailRS> GetPhotosList(PhotosDetailRQ PhotosDetailRQ)
+        public Task<List<PhotosDetailRS>> GetPhotosList(PhotosDetailRQ photosDetailRQ)
         {
             throw new NotImplementedException();
         }

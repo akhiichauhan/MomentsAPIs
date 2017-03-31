@@ -36,8 +36,6 @@ namespace Moments.Host
         public override Task<object> ReadFromStreamAsync(Type type, Stream readStream,
             System.Net.Http.HttpContent content, IFormatterLogger formatterLogger)
         {
-            using (var profileContext = new ProfileContext("Pre Controller - Deserializer"))
-            {
                 var tcs = new TaskCompletionSource<object>();
                 //todo convert Stream to byte is alternate option rather than using Memory Stream - need to have comparission in place
                 using (var memoryStream = new MemoryStream())
@@ -48,7 +46,6 @@ namespace Moments.Host
                     tcs.SetResult(output);
                 }
                 return tcs.Task;
-            }
         }
 
         public override Task WriteToStreamAsync(Type type, object value, Stream writeStream,

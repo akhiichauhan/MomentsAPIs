@@ -1,10 +1,11 @@
-﻿using Moments.APis.DataContract;
+﻿using System.Threading.Tasks;
+using Moments.APIs.DataContract;
 
-namespace Moments.APis.ServiceContract
+namespace Moments.APIs.ServiceContract
 {
     public interface IRegistration
     {
-        bool SaveUserData(UserRegistrationRQ userRegistrationRQ);
+        Task<bool> SaveUserData(UserRegistrationRQ userRegistrationRQ);
 
         //SaveUserUpdateData.
     }

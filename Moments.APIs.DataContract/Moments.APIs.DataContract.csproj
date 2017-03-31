@@ -40,9 +40,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ExecutionResponse.cs" />
+    <Compile Include="PhotoMetadata.cs" />
     <Compile Include="PhotosDetail.cs" />
     <Compile Include="PhotosDetailRQ.cs" />
     <Compile Include="PhotosDetailRS.cs" />
+    <Compile Include="User.cs" />
     <Compile Include="UserName.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="UserRegistrationRQ.cs" />
