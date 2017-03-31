@@ -23,15 +23,17 @@ namespace Moments.Data.MySqlDataSource
                     int personId = CreatePerson(context, user);
 
                     //Save the data in user
-                    user newUser = new user {
-                        person = {personId = personId},
-                        FirstName = user.Name.FirstName,
-                        LastName = user.Name.LastName,
-                        emailId = user.Email,
-                        gender = user.Gender.ToString(),
-
-                        friends = GetFriends(user.FriendsList)
+                    user newUser = new user();
+                    newUser.person = new person()
+                    {
+                        personId = personId
                     };
+                    newUser.FirstName = user.Name?.FirstName;
+                    newUser.LastName = user.Name?.LastName;
+                    newUser.emailId = user.Email;
+                    newUser.gender = user.Gender.ToString();
+                    newUser.friends = GetFriends(user.FriendsList);
+
                     context.users.Add(newUser);
                     context.SaveChanges();
                     response.ExecutionData.Add(KeyStore.User.UserId, newUser.userid);
@@ -60,7 +62,10 @@ namespace Moments.Data.MySqlDataSource
 
         private int CreatePerson(momentsEntities context, User user)
         {
-            person person = new person();
+            person person = new person()
+            {
+               CreatedOn = DateTime.Now
+            };
             context.persons.Add(person);
             context.SaveChanges();
             return person.personId;
@@ -76,7 +81,7 @@ namespace Moments.Data.MySqlDataSource
 
                     photo newPhoto = new photo
                     {
-                        user = {userid = int.Parse(photoDetails.UserId)},
+                        user =new user() {userid = int.Parse(photoDetails.UserId)},
                         location = photoDetails.Location,
                         url = photoDetails.PhotoUrl
                     };
@@ -103,15 +108,18 @@ namespace Moments.Data.MySqlDataSource
                 List<string> photoUrls = new List<string>();
                 using (momentsEntities context = new momentsEntities())
                 {
+                    int personIdAsInt = int.Parse(user.PersonId);
+                    int userIdAsInt = int.Parse(user.UserId);
+
                     //Get the user photos from photo tags
-                    List<string> photoIds =
+                    List<int?> photoIds =
                         context.phototags.Include("photos")
-                            .Where(person => person.personId == int.Parse(user.PersonId))
-                            .Select(photo => photo.photoId.ToString()).ToList();
+                            .Where(person => person.personId == personIdAsInt)
+                            .Select(photo => photo.photoId).ToList();
 
                     //Get the user photos from photos for the users or from the taged photos
                     photoUrls =
-                        context.photos.Where(phts => photoIds.Contains(phts.PhotoId.ToString()) || (phts.user.userid.ToString()==user.UserId))
+                        context.photos.Where(phts => photoIds.Contains(phts.PhotoId) || (phts.user.userid== userIdAsInt))
                             .Select(phts => phts.url)
                             .ToList();
 
