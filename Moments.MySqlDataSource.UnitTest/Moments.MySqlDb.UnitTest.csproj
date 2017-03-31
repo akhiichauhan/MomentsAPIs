@@ -38,6 +38,10 @@
       <HintPath>..\packages\MySql.Data.6.9.9\lib\net45\MySql.Data.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="MySql.Data.Entity.EF5, Version=6.9.9.0, Culture=neutral, PublicKeyToken=c5687fc88969c44d, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>C:\Program Files (x86)\MySQL\MySQL Connector Net 6.9.9\Assemblies\v4.5\MySql.Data.Entity.EF5.dll</HintPath>
+    </Reference>
     <Reference Include="MySql.Data.Entity.EF6, Version=6.9.8.0, Culture=neutral, PublicKeyToken=c5687fc88969c44d, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>C:\Program Files (x86)\MySQL\MySQL Connector Net 6.9.8\Assemblies\v4.5\MySql.Data.Entity.EF6.dll</HintPath>
@@ -77,7 +81,9 @@
     <None Include="App.config">
       <SubType>Designer</SubType>
     </None>
-    <None Include="packages.config" />
+    <None Include="packages.config">
+      <SubType>Designer</SubType>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Moments.APIs.DataContract\Moments.APIs.DataContract.csproj">

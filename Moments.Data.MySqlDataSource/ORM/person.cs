@@ -21,6 +21,7 @@ namespace Moments.Data.MySqlDataSource.ORM
         }
     
         public int personId { get; set; }
+        public Nullable<System.DateTime> CreatedOn { get; set; }
     
         public virtual ICollection<user> users { get; set; }
         public virtual ICollection<phototag> phototags { get; set; }
