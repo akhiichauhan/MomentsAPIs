@@ -7,6 +7,18 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Moments.APIs.ServiceContrac
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Moments.APIs.DataContract", "Moments.APIs.DataContract\Moments.APIs.DataContract.csproj", "{8363FE7D-F413-4E34-9276-A9C62EEE394F}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Core", "Core", "{9A803625-0B9B-426D-A16C-EE1639B44FD7}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Host", "Host", "{BCD8000F-0351-454A-A2B5-DF3601DCCB77}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Contracts", "Contracts", "{BA53630B-079F-4A2E-A99E-62DF9B15C641}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Data", "Data", "{40C94AD3-2D7E-4610-A22B-7F52090675C5}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Infrastructure", "Infrastructure", "{B29F26DD-A623-410F-B295-CF5839CC48DF}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{0361366E-B22E-42E9-8008-62CBAC419257}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -24,5 +36,9 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{750A8529-528B-46B2-BDF9-4BA336F1446E} = {BA53630B-079F-4A2E-A99E-62DF9B15C641}
+		{8363FE7D-F413-4E34-9276-A9C62EEE394F} = {BA53630B-079F-4A2E-A99E-62DF9B15C641}
 	EndGlobalSection
 EndGlobal
