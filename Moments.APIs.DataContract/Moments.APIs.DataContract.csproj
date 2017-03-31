@@ -41,6 +41,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ExecutionResponse.cs" />
+    <Compile Include="KeyStore.cs" />
     <Compile Include="PhotoMetadata.cs" />
     <Compile Include="PhotosDetail.cs" />
     <Compile Include="PhotosDetailRQ.cs" />

@@ -8,5 +8,7 @@ namespace Moments.APIs.DataContract
 {
     public class PhotoMetadata
     {
+        public string PhotoId { get; set; }
+        public List<string> PersonIds { get; set; }
     }
 }

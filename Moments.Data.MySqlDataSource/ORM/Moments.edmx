@@ -1,0 +1,383 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="momentsModel.Store" Provider="MySql.Data.MySqlClient" ProviderManifestToken="5.5" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'def.moments.friends' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="friends">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" Nullable="false" />
+          <Property Name="userId" Type="int" />
+          <Property Name="friendId" Type="varchar" MaxLength="45" />
+        </EntityType>
+        <EntityType Name="person">
+          <Key>
+            <PropertyRef Name="personId" />
+          </Key>
+          <Property Name="personId" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="photos">
+          <Key>
+            <PropertyRef Name="PhotoId" />
+          </Key>
+          <Property Name="PhotoId" Type="int" Nullable="false" />
+          <Property Name="userId" Type="int" />
+          <Property Name="url" Type="varchar" MaxLength="500" />
+          <Property Name="location" Type="varchar" MaxLength="200" />
+          <Property Name="time" Type="datetime" Precision="0" />
+        </EntityType>
+        <EntityType Name="phototag">
+          <Key>
+            <PropertyRef Name="tagId" />
+          </Key>
+          <Property Name="tagId" Type="int" Nullable="false" />
+          <Property Name="photoId" Type="int" />
+          <Property Name="personId" Type="int" />
+        </EntityType>
+        <EntityType Name="user">
+          <Key>
+            <PropertyRef Name="userid" />
+          </Key>
+          <Property Name="userid" Type="int" Nullable="false" />
+          <Property Name="peopleId" Type="int" />
+          <Property Name="CreatedDate" Type="datetime" Precision="0" />
+          <Property Name="CreatedBy" Type="varchar" MaxLength="45" />
+          <Property Name="UpdatedOn" Type="datetime" Precision="0" />
+          <Property Name="UpdatedBy" Type="datetime" Precision="0" />
+          <Property Name="FirstName" Type="varchar" MaxLength="150" />
+          <Property Name="MiddleName" Type="varchar" MaxLength="150" />
+          <Property Name="LastName" Type="varchar" MaxLength="150" />
+          <Property Name="emailId" Type="varchar" MaxLength="45" />
+          <Property Name="gender" Type="varchar" MaxLength="45" />
+        </EntityType>
+        <Association Name="People_user">
+          <End Role="person" Type="Self.person" Multiplicity="0..1" />
+          <End Role="user" Type="Self.user" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="person">
+              <PropertyRef Name="personId" />
+            </Principal>
+            <Dependent Role="user">
+              <PropertyRef Name="peopleId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="person_phototags">
+          <End Role="person" Type="Self.person" Multiplicity="0..1" />
+          <End Role="phototag" Type="Self.phototag" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="person">
+              <PropertyRef Name="personId" />
+            </Principal>
+            <Dependent Role="phototag">
+              <PropertyRef Name="personId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="photo_phototags">
+          <End Role="photos" Type="Self.photos" Multiplicity="0..1" />
+          <End Role="phototag" Type="Self.phototag" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="photos">
+              <PropertyRef Name="PhotoId" />
+            </Principal>
+            <Dependent Role="phototag">
+              <PropertyRef Name="photoId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="user_friend">
+          <End Role="user" Type="Self.user" Multiplicity="0..1" />
+          <End Role="friends" Type="Self.friends" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="user">
+              <PropertyRef Name="userid" />
+            </Principal>
+            <Dependent Role="friends">
+              <PropertyRef Name="userId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="user_Photos">
+          <End Role="user" Type="Self.user" Multiplicity="0..1" />
+          <End Role="photos" Type="Self.photos" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="user">
+              <PropertyRef Name="userid" />
+            </Principal>
+            <Dependent Role="photos">
+              <PropertyRef Name="userId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="momentsModelStoreContainer">
+          <EntitySet Name="person" EntityType="Self.person" Schema="moments" store:Type="Tables" />
+          <EntitySet Name="photos" EntityType="Self.photos" Schema="moments" store:Type="Tables" />
+          <EntitySet Name="phototag" EntityType="Self.phototag" Schema="moments" store:Type="Tables" />
+          <EntitySet Name="user" EntityType="Self.user" Schema="moments" store:Type="Tables" />
+          <EntitySet Name="friends" EntityType="Self.friends" store:Type="Tables" store:Schema="moments">
+            <DefiningQuery>SELECT
+`friends`.`Id`, 
+`friends`.`userId`, 
+`friends`.`friendId`
+FROM `friends` AS `friends`</DefiningQuery>
+          </EntitySet>
+          <AssociationSet Name="People_user" Association="Self.People_user">
+            <End Role="person" EntitySet="person" />
+            <End Role="user" EntitySet="user" />
+          </AssociationSet>
+          <AssociationSet Name="person_phototags" Association="Self.person_phototags">
+            <End Role="person" EntitySet="person" />
+            <End Role="phototag" EntitySet="phototag" />
+          </AssociationSet>
+          <AssociationSet Name="photo_phototags" Association="Self.photo_phototags">
+            <End Role="photos" EntitySet="photos" />
+            <End Role="phototag" EntitySet="phototag" />
+          </AssociationSet>
+          <AssociationSet Name="user_friend" Association="Self.user_friend">
+            <End Role="user" EntitySet="user" />
+            <End Role="friends" EntitySet="friends" />
+          </AssociationSet>
+          <AssociationSet Name="user_Photos" Association="Self.user_Photos">
+            <End Role="user" EntitySet="user" />
+            <End Role="photos" EntitySet="photos" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="momentsModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="person">
+          <Key>
+            <PropertyRef Name="personId" />
+          </Key>
+          <Property Name="personId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="users" Relationship="Self.People_user" FromRole="person" ToRole="user" />
+          <NavigationProperty Name="phototags" Relationship="Self.person_phototags" FromRole="person" ToRole="phototag" />
+        </EntityType>
+        <EntityType Name="photo">
+          <Key>
+            <PropertyRef Name="PhotoId" />
+          </Key>
+          <Property Name="PhotoId" Type="Int32" Nullable="false" />
+          <Property Name="userId" Type="Int32" />
+          <Property Name="url" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="location" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="time" Type="DateTime" />
+          <NavigationProperty Name="phototags" Relationship="Self.photo_phototags" FromRole="photos" ToRole="phototag" />
+          <NavigationProperty Name="user" Relationship="Self.user_Photos" FromRole="photos" ToRole="user" />
+        </EntityType>
+        <EntityType Name="phototag">
+          <Key>
+            <PropertyRef Name="tagId" />
+          </Key>
+          <Property Name="tagId" Type="Int32" Nullable="false" />
+          <Property Name="photoId" Type="Int32" />
+          <Property Name="personId" Type="Int32" />
+          <NavigationProperty Name="person" Relationship="Self.person_phototags" FromRole="phototag" ToRole="person" />
+          <NavigationProperty Name="photo" Relationship="Self.photo_phototags" FromRole="phototag" ToRole="photos" />
+        </EntityType>
+        <EntityType Name="user">
+          <Key>
+            <PropertyRef Name="userid" />
+          </Key>
+          <Property Name="userid" Type="Int32" Nullable="false" />
+          <Property Name="peopleId" Type="Int32" />
+          <Property Name="CreatedDate" Type="DateTime" />
+          <Property Name="CreatedBy" Type="String" MaxLength="45" FixedLength="false" Unicode="false" />
+          <Property Name="UpdatedOn" Type="DateTime" />
+          <Property Name="UpdatedBy" Type="DateTime" />
+          <Property Name="FirstName" Type="String" MaxLength="150" FixedLength="false" Unicode="false" />
+          <Property Name="MiddleName" Type="String" MaxLength="150" FixedLength="false" Unicode="false" />
+          <Property Name="LastName" Type="String" MaxLength="150" FixedLength="false" Unicode="false" />
+          <Property Name="emailId" Type="String" MaxLength="45" FixedLength="false" Unicode="false" />
+          <Property Name="gender" Type="String" MaxLength="45" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="person" Relationship="Self.People_user" FromRole="user" ToRole="person" />
+          <NavigationProperty Name="photos" Relationship="Self.user_Photos" FromRole="user" ToRole="photos" />
+          <NavigationProperty Name="friends" Relationship="Self.user_friend" FromRole="user" ToRole="friends" />
+        </EntityType>
+        <EntityType Name="friend">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" />
+          <Property Name="userId" Type="Int32" />
+          <Property Name="friendId" Type="String" MaxLength="45" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="user" Relationship="Self.user_friend" FromRole="friends" ToRole="user" />
+        </EntityType>
+        <Association Name="People_user">
+          <End Role="person" Type="Self.person" Multiplicity="0..1" />
+          <End Role="user" Type="Self.user" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="person">
+              <PropertyRef Name="personId" />
+            </Principal>
+            <Dependent Role="user">
+              <PropertyRef Name="peopleId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="person_phototags">
+          <End Role="person" Type="Self.person" Multiplicity="0..1" />
+          <End Role="phototag" Type="Self.phototag" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="person">
+              <PropertyRef Name="personId" />
+            </Principal>
+            <Dependent Role="phototag">
+              <PropertyRef Name="personId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="photo_phototags">
+          <End Role="photos" Type="Self.photo" Multiplicity="0..1" />
+          <End Role="phototag" Type="Self.phototag" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="photos">
+              <PropertyRef Name="PhotoId" />
+            </Principal>
+            <Dependent Role="phototag">
+              <PropertyRef Name="photoId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="user_Photos">
+          <End Role="user" Type="Self.user" Multiplicity="0..1" />
+          <End Role="photos" Type="Self.photo" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="user">
+              <PropertyRef Name="userid" />
+            </Principal>
+            <Dependent Role="photos">
+              <PropertyRef Name="userId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="user_friend">
+          <End Role="user" Type="Self.user" Multiplicity="0..1" />
+          <End Role="friends" Type="Self.friend" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="user">
+              <PropertyRef Name="userid" />
+            </Principal>
+            <Dependent Role="friends">
+              <PropertyRef Name="userId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="momentsEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="people" EntityType="Self.person" />
+          <EntitySet Name="photos" EntityType="Self.photo" />
+          <EntitySet Name="phototags" EntityType="Self.phototag" />
+          <EntitySet Name="users" EntityType="Self.user" />
+          <EntitySet Name="friends" EntityType="Self.friend" />
+          <AssociationSet Name="People_user" Association="Self.People_user">
+            <End Role="person" EntitySet="people" />
+            <End Role="user" EntitySet="users" />
+          </AssociationSet>
+          <AssociationSet Name="person_phototags" Association="Self.person_phototags">
+            <End Role="person" EntitySet="people" />
+            <End Role="phototag" EntitySet="phototags" />
+          </AssociationSet>
+          <AssociationSet Name="photo_phototags" Association="Self.photo_phototags">
+            <End Role="photos" EntitySet="photos" />
+            <End Role="phototag" EntitySet="phototags" />
+          </AssociationSet>
+          <AssociationSet Name="user_Photos" Association="Self.user_Photos">
+            <End Role="user" EntitySet="users" />
+            <End Role="photos" EntitySet="photos" />
+          </AssociationSet>
+          <AssociationSet Name="user_friend" Association="Self.user_friend">
+            <End Role="user" EntitySet="users" />
+            <End Role="friends" EntitySet="friends" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="momentsModelStoreContainer" CdmEntityContainer="momentsEntities">
+          <EntitySetMapping Name="people">
+            <EntityTypeMapping TypeName="momentsModel.person">
+              <MappingFragment StoreEntitySet="person">
+                <ScalarProperty Name="personId" ColumnName="personId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="photos">
+            <EntityTypeMapping TypeName="momentsModel.photo">
+              <MappingFragment StoreEntitySet="photos">
+                <ScalarProperty Name="PhotoId" ColumnName="PhotoId" />
+                <ScalarProperty Name="userId" ColumnName="userId" />
+                <ScalarProperty Name="url" ColumnName="url" />
+                <ScalarProperty Name="location" ColumnName="location" />
+                <ScalarProperty Name="time" ColumnName="time" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="phototags">
+            <EntityTypeMapping TypeName="momentsModel.phototag">
+              <MappingFragment StoreEntitySet="phototag">
+                <ScalarProperty Name="tagId" ColumnName="tagId" />
+                <ScalarProperty Name="photoId" ColumnName="photoId" />
+                <ScalarProperty Name="personId" ColumnName="personId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="users">
+            <EntityTypeMapping TypeName="momentsModel.user">
+              <MappingFragment StoreEntitySet="user">
+                <ScalarProperty Name="userid" ColumnName="userid" />
+                <ScalarProperty Name="peopleId" ColumnName="peopleId" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="UpdatedOn" ColumnName="UpdatedOn" />
+                <ScalarProperty Name="UpdatedBy" ColumnName="UpdatedBy" />
+                <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+                <ScalarProperty Name="MiddleName" ColumnName="MiddleName" />
+                <ScalarProperty Name="LastName" ColumnName="LastName" />
+                <ScalarProperty Name="emailId" ColumnName="emailId" />
+                <ScalarProperty Name="gender" ColumnName="gender" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="friends">
+            <EntityTypeMapping TypeName="momentsModel.friend">
+              <MappingFragment StoreEntitySet="friends">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="userId" ColumnName="userId" />
+                <ScalarProperty Name="friendId" ColumnName="friendId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="true" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
