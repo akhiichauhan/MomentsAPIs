@@ -1,0 +1,14 @@
+{
+	"TargetImage" : {
+		"S3Object" : {
+			"Bucket" : "momentsfirstgallery/testFolder",
+			"Name" : "Desert.jpg"
+		}
+	},
+	"SourceImage" : {
+		"S3Object" : {
+			"Bucket" : "momentsfirstgallery/testFolder",
+			"Name" : "dog.jpg"
+		}
+	}
+}
