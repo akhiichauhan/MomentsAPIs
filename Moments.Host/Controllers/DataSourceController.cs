@@ -11,12 +11,15 @@ using Moments.Data.MySqlDataSource;
 
 namespace Moments.Host.Controllers
 {
-    [RoutePrefix("moments/api/datasource")]
+    [RoutePrefix("api/datasource")]
     public class DataSourceController: ApiController
     {
         [Route("savephotometadata")]
         public async Task<IHttpActionResult> SavePhotoMetadata(PhotoMetadata photoMetadata)
         {
+            if(photoMetadata == null)
+                throw new ArgumentNullException("photoMetadata");
+
             IDataSource dataSource = new MySqlDataSource();
             await dataSource.SavePhotoMetadata(photoMetadata);
             return Ok();

@@ -230,6 +230,10 @@
       <Project>{750a8529-528b-46b2-bdf9-4ba336f1446e}</Project>
       <Name>Moments.APIs.ServiceContract</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Moments.Data.MySqlDataSource\Moments.Data.MySqlDataSource.csproj">
+      <Project>{00b2ed18-1b85-43da-a824-cb92d2c8b8e8}</Project>
+      <Name>Moments.Data.MySqlDataSource</Name>
+    </ProjectReference>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
