@@ -20,11 +20,11 @@ namespace Moments.APIs.Core
         {
             DataSource = new MySqlDataSource();
         }
-        public async Task<bool> SaveUserData(UserRegistrationRQ userRegistrationRQ)
+        public async Task<ExecutionResponse> SaveUserData(UserRegistrationRQ userRegistrationRQ)
         {
-            await DataSource.CreateUser(userRegistrationRQ.User);
+           var response= await DataSource.CreateUser(userRegistrationRQ.User);
             RaisePhotoUpdatedNotification(userRegistrationRQ.User.UserId, userRegistrationRQ.User.ProfilePic);
-            return true;
+            return response;
         }
         private void RaisePhotoUpdatedNotification(string userId, string imageUrl)
         {
