@@ -114,8 +114,13 @@ namespace Moments.Data.MySqlDataSource
                 List<string> photoUrls = new List<string>();
                 using (momentsEntities context = new momentsEntities())
                 {
-                    int personIdAsInt = int.Parse(user.PersonId);
                     int userIdAsInt = int.Parse(user.UserId);
+
+                    int personIdAsInt =
+                        context.users.Where(u => u.userIdentifier == userIdAsInt)
+                            .Select(u => u.person.personId)
+                            .FirstOrDefault();
+                   
 
                     //Get the user photos from photo tags
                     List<int?> photoIds =
