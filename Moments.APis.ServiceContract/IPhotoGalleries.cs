@@ -10,6 +10,6 @@ namespace Moments.APIs.ServiceContract
     {
         Task<bool> SavePhotosDetail(PhotosDetail photosDetail);
 
-        Task<List<PhotosDetailRS>> GetPhotosList(PhotosDetailRQ photosDetailRQ);
+        Task<PhotosDetailRS> GetPhotosList(PhotosDetailRQ photosDetailRQ);
     }
 }

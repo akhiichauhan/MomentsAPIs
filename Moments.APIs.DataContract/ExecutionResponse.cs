@@ -17,7 +17,7 @@ namespace Moments.APIs.DataContract
 
         public string Status { get; set; }
 
-        public Dictionary<string,object> ExecutionData { get; set; }
+        public Dictionary<string, object> ExecutionData { get; set; }
 
         public List<string> Errors { get; set; }
     }
