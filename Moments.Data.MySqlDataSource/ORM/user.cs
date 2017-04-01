@@ -34,6 +34,7 @@ namespace Moments.Data.MySqlDataSource.ORM
         public Nullable<int> userIdentifier { get; set; }
         public string faceId { get; set; }
         public string usercol { get; set; }
+        public string personId { get; set; }
     
         public virtual person person { get; set; }
         public virtual ICollection<photo> photos { get; set; }

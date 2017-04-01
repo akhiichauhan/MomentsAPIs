@@ -30,7 +30,7 @@ namespace Moments.Data.MySqlDataSource.ORM
         public DbSet<phototag> phototags { get; set; }
         public DbSet<user> users { get; set; }
         public DbSet<friend> friends { get; set; }
-        public DbSet<photo1> photo1 { get; set; }
         public DbSet<photopersonmapping> photopersonmappings { get; set; }
+        public DbSet<photo1> photo1 { get; set; }
     }
 }
