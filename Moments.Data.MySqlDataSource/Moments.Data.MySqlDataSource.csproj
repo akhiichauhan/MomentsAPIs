@@ -129,7 +129,7 @@
       <DependentUpon>Moments.edmx</DependentUpon>
       <LastGenOutput>Moments.cs</LastGenOutput>
     </Content>
-    <Content Include="Setup\CreateDbScript.txt" />
+    <Content Include="Setup\CreateDbScript.sql" />
     <Content Include="Setup\DatabaseDiagram.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

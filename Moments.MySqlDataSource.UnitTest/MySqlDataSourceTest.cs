@@ -33,6 +33,7 @@ namespace Moments.MySqlDb.UnitTest
                         "10001",
                         "10002"
                     },
+                    UserId = "100"
                 });
 
                 string personId =

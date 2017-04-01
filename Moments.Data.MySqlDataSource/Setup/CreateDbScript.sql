@@ -26,9 +26,8 @@ DROP TABLE IF EXISTS `moments`.`person` ;
 CREATE TABLE IF NOT EXISTS `moments`.`person` (
   `personId` INT(11) NOT NULL AUTO_INCREMENT COMMENT '',
   `CreatedOn` DATETIME NULL DEFAULT NULL COMMENT '',
-  PRIMARY KEY (`personId`)  COMMENT '')
+  PRIMARY KEY (`personId`))
 ENGINE = InnoDB
-AUTO_INCREMENT = 10
 DEFAULT CHARACTER SET = latin1;
 
 
@@ -38,7 +37,7 @@ DEFAULT CHARACTER SET = latin1;
 DROP TABLE IF EXISTS `moments`.`user` ;
 
 CREATE TABLE IF NOT EXISTS `moments`.`user` (
-  `userid` INT(11) NOT NULL AUTO_INCREMENT COMMENT '',
+  `userid` INT(11) NOT NULL COMMENT '',
   `peopleId` INT(11) NULL DEFAULT NULL COMMENT '',
   `CreatedDate` DATETIME NULL DEFAULT NULL COMMENT '',
   `CreatedBy` VARCHAR(45) NULL DEFAULT NULL COMMENT '',
@@ -49,15 +48,14 @@ CREATE TABLE IF NOT EXISTS `moments`.`user` (
   `LastName` VARCHAR(150) NULL DEFAULT NULL COMMENT '',
   `emailId` VARCHAR(45) NULL DEFAULT NULL COMMENT '',
   `gender` VARCHAR(45) NULL DEFAULT NULL COMMENT '',
-  PRIMARY KEY (`userid`)  COMMENT '',
-  INDEX `People_user_idx` (`peopleId` ASC)  COMMENT '',
+  PRIMARY KEY (`userid`),
+  INDEX `People_user_idx` (`peopleId` ASC),
   CONSTRAINT `People_user`
     FOREIGN KEY (`peopleId`)
     REFERENCES `moments`.`person` (`personId`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB
-AUTO_INCREMENT = 4
 DEFAULT CHARACTER SET = latin1;
 
 
@@ -70,15 +68,14 @@ CREATE TABLE IF NOT EXISTS `moments`.`friends` (
   `Id` INT(11) NOT NULL AUTO_INCREMENT COMMENT '',
   `userId` INT(11) NULL DEFAULT NULL COMMENT '',
   `friendId` VARCHAR(45) NULL DEFAULT NULL COMMENT '',
-  PRIMARY KEY (`Id`)  COMMENT '',
-  INDEX `user_friend_idx` (`userId` ASC)  COMMENT '',
+  PRIMARY KEY (`Id`),
+  INDEX `user_friend_idx` (`userId` ASC),
   CONSTRAINT `user_friend`
     FOREIGN KEY (`userId`)
     REFERENCES `moments`.`user` (`userid`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB
-AUTO_INCREMENT = 3
 DEFAULT CHARACTER SET = latin1;
 
 
@@ -93,15 +90,14 @@ CREATE TABLE IF NOT EXISTS `moments`.`photos` (
   `url` VARCHAR(500) NULL DEFAULT NULL COMMENT '',
   `location` VARCHAR(200) NULL DEFAULT NULL COMMENT '',
   `time` DATETIME NULL DEFAULT NULL COMMENT '',
-  PRIMARY KEY (`PhotoId`)  COMMENT '',
-  INDEX `user_Photos_idx` (`userId` ASC)  COMMENT '',
+  PRIMARY KEY (`PhotoId`),
+  INDEX `user_Photos_idx` (`userId` ASC),
   CONSTRAINT `user_Photos`
     FOREIGN KEY (`userId`)
     REFERENCES `moments`.`user` (`userid`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB
-AUTO_INCREMENT = 3
 DEFAULT CHARACTER SET = latin1;
 
 
@@ -114,9 +110,9 @@ CREATE TABLE IF NOT EXISTS `moments`.`phototag` (
   `tagId` INT(11) NOT NULL AUTO_INCREMENT COMMENT '',
   `photoId` INT(11) NULL DEFAULT NULL COMMENT '',
   `personId` INT(11) NULL DEFAULT NULL COMMENT '',
-  PRIMARY KEY (`tagId`)  COMMENT '',
-  INDEX `photo_photoTags_idx` (`photoId` ASC)  COMMENT '',
-  INDEX `person_photoTags_idx` (`personId` ASC)  COMMENT '',
+  PRIMARY KEY (`tagId`),
+  INDEX `photo_photoTags_idx` (`photoId` ASC),
+  INDEX `person_photoTags_idx` (`personId` ASC),
   CONSTRAINT `person_phototags`
     FOREIGN KEY (`personId`)
     REFERENCES `moments`.`person` (`personId`)
@@ -128,7 +124,6 @@ CREATE TABLE IF NOT EXISTS `moments`.`phototag` (
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB
-AUTO_INCREMENT = 3
 DEFAULT CHARACTER SET = latin1;
 
 
