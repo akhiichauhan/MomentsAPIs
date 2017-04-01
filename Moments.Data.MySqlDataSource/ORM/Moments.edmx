@@ -20,6 +20,24 @@
           <Property Name="personId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="CreatedOn" Type="datetime" Precision="0" />
         </EntityType>
+        <EntityType Name="photo">
+          <Key>
+            <PropertyRef Name="photoId" />
+          </Key>
+          <Property Name="photoId" Type="int" Nullable="false" />
+          <Property Name="Name" Type="varchar" MaxLength="45" />
+          <Property Name="Url" Type="varchar" MaxLength="500" />
+          <Property Name="Location" Type="varchar" MaxLength="500" />
+          <Property Name="Time" Type="datetime" Precision="0" />
+        </EntityType>
+        <EntityType Name="photopersonmapping">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" Nullable="false" />
+          <Property Name="PhotoId" Type="int" />
+          <Property Name="PersonId" Type="int" />
+        </EntityType>
         <EntityType Name="photos">
           <Key>
             <PropertyRef Name="PhotoId" />
@@ -54,6 +72,8 @@
           <Property Name="LastName" Type="varchar" MaxLength="150" />
           <Property Name="emailId" Type="varchar" MaxLength="45" />
           <Property Name="gender" Type="varchar" MaxLength="45" />
+          <Property Name="faceId" Type="varchar" MaxLength="200" />
+          <Property Name="usercol" Type="varchar" MaxLength="45" />
         </EntityType>
         <Association Name="People_user">
           <End Role="person" Type="Self.person" Multiplicity="0..1" />
@@ -67,6 +87,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="Person_Mapping">
+          <End Role="person" Type="Self.person" Multiplicity="0..1" />
+          <End Role="photopersonmapping" Type="Self.photopersonmapping" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="person">
+              <PropertyRef Name="personId" />
+            </Principal>
+            <Dependent Role="photopersonmapping">
+              <PropertyRef Name="PersonId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="person_phototags">
           <End Role="person" Type="Self.person" Multiplicity="0..1" />
           <End Role="phototag" Type="Self.phototag" Multiplicity="*" />
@@ -76,6 +108,18 @@
             </Principal>
             <Dependent Role="phototag">
               <PropertyRef Name="personId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="Photo_Mapping">
+          <End Role="photo" Type="Self.photo" Multiplicity="0..1" />
+          <End Role="photopersonmapping" Type="Self.photopersonmapping" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="photo">
+              <PropertyRef Name="photoId" />
+            </Principal>
+            <Dependent Role="photopersonmapping">
+              <PropertyRef Name="PhotoId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -118,6 +162,8 @@
         <EntityContainer Name="momentsModelStoreContainer">
           <EntitySet Name="friends" EntityType="Self.friends" Schema="moments" store:Type="Tables" />
           <EntitySet Name="person" EntityType="Self.person" Schema="moments" store:Type="Tables" />
+          <EntitySet Name="photo" EntityType="Self.photo" Schema="moments" store:Type="Tables" />
+          <EntitySet Name="photopersonmapping" EntityType="Self.photopersonmapping" Schema="moments" store:Type="Tables" />
           <EntitySet Name="photos" EntityType="Self.photos" Schema="moments" store:Type="Tables" />
           <EntitySet Name="phototag" EntityType="Self.phototag" Schema="moments" store:Type="Tables" />
           <EntitySet Name="user" EntityType="Self.user" Schema="moments" store:Type="Tables" />
@@ -125,9 +171,17 @@
             <End Role="person" EntitySet="person" />
             <End Role="user" EntitySet="user" />
           </AssociationSet>
+          <AssociationSet Name="Person_Mapping" Association="Self.Person_Mapping">
+            <End Role="person" EntitySet="person" />
+            <End Role="photopersonmapping" EntitySet="photopersonmapping" />
+          </AssociationSet>
           <AssociationSet Name="person_phototags" Association="Self.person_phototags">
             <End Role="person" EntitySet="person" />
             <End Role="phototag" EntitySet="phototag" />
+          </AssociationSet>
+          <AssociationSet Name="Photo_Mapping" Association="Self.Photo_Mapping">
+            <End Role="photo" EntitySet="photo" />
+            <End Role="photopersonmapping" EntitySet="photopersonmapping" />
           </AssociationSet>
           <AssociationSet Name="photo_phototags" Association="Self.photo_phototags">
             <End Role="photos" EntitySet="photos" />
@@ -154,6 +208,7 @@
           <NavigationProperty Name="users" Relationship="Self.People_user" FromRole="person" ToRole="user" />
           <NavigationProperty Name="phototags" Relationship="Self.person_phototags" FromRole="person" ToRole="phototag" />
           <Property Name="CreatedOn" Type="DateTime" />
+          <NavigationProperty Name="photopersonmappings" Relationship="momentsModel.Person_Mapping" FromRole="person" ToRole="photopersonmapping" />
         </EntityType>
         <EntityType Name="photo">
           <Key>
@@ -196,6 +251,8 @@
           <NavigationProperty Name="photos" Relationship="Self.user_Photos" FromRole="user" ToRole="photos" />
           <NavigationProperty Name="friends" Relationship="Self.user_friend" FromRole="user" ToRole="friends" />
           <Property Name="userIdentifier" Type="Int32" />
+          <Property Name="faceId" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="usercol" Type="String" MaxLength="45" FixedLength="false" Unicode="false" />
         </EntityType>
         <EntityType Name="friend">
           <Key>
@@ -292,7 +349,62 @@
             <End Role="user" EntitySet="users" />
             <End Role="friends" EntitySet="friends" />
           </AssociationSet>
+          <EntitySet Name="photo1" EntityType="momentsModel.photo1" />
+          <EntitySet Name="photopersonmappings" EntityType="momentsModel.photopersonmapping" />
+          <AssociationSet Name="Person_Mapping" Association="momentsModel.Person_Mapping">
+            <End Role="person" EntitySet="people" />
+            <End Role="photopersonmapping" EntitySet="photopersonmappings" />
+          </AssociationSet>
+          <AssociationSet Name="Photo_Mapping" Association="momentsModel.Photo_Mapping">
+            <End Role="photo1" EntitySet="photo1" />
+            <End Role="photopersonmapping" EntitySet="photopersonmappings" />
+          </AssociationSet>
         </EntityContainer>
+        <EntityType Name="photo1">
+          <Key>
+            <PropertyRef Name="photoId" />
+          </Key>
+          <Property Name="photoId" Type="Int32" Nullable="false" />
+          <Property Name="Name" Type="String" MaxLength="45" FixedLength="false" Unicode="false" />
+          <Property Name="Url" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="Location" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="Time" Type="DateTime" />
+          <NavigationProperty Name="photopersonmappings" Relationship="momentsModel.Photo_Mapping" FromRole="photo1" ToRole="photopersonmapping" />
+        </EntityType>
+        <EntityType Name="photopersonmapping">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" />
+          <Property Name="PhotoId" Type="Int32" />
+          <Property Name="PersonId" Type="Int32" />
+          <NavigationProperty Name="person" Relationship="momentsModel.Person_Mapping" FromRole="photopersonmapping" ToRole="person" />
+          <NavigationProperty Name="photo" Relationship="momentsModel.Photo_Mapping" FromRole="photopersonmapping" ToRole="photo1" />
+        </EntityType>
+        <Association Name="Person_Mapping">
+          <End Type="momentsModel.person" Role="person" Multiplicity="0..1" />
+          <End Type="momentsModel.photopersonmapping" Role="photopersonmapping" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="person">
+              <PropertyRef Name="personId" />
+            </Principal>
+            <Dependent Role="photopersonmapping">
+              <PropertyRef Name="PersonId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="Photo_Mapping">
+          <End Type="momentsModel.photo1" Role="photo1" Multiplicity="0..1" />
+          <End Type="momentsModel.photopersonmapping" Role="photopersonmapping" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="photo1">
+              <PropertyRef Name="photoId" />
+            </Principal>
+            <Dependent Role="photopersonmapping">
+              <PropertyRef Name="PhotoId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -330,6 +442,8 @@
           <EntitySetMapping Name="users">
             <EntityTypeMapping TypeName="momentsModel.user">
               <MappingFragment StoreEntitySet="user">
+                <ScalarProperty Name="usercol" ColumnName="usercol" />
+                <ScalarProperty Name="faceId" ColumnName="faceId" />
                 <ScalarProperty Name="userIdentifier" ColumnName="userIdentifier" />
                 <ScalarProperty Name="userid" ColumnName="userid" />
                 <ScalarProperty Name="peopleId" ColumnName="peopleId" />
@@ -351,6 +465,26 @@
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="userId" ColumnName="userId" />
                 <ScalarProperty Name="friendId" ColumnName="friendId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="photo1">
+            <EntityTypeMapping TypeName="momentsModel.photo1">
+              <MappingFragment StoreEntitySet="photo">
+                <ScalarProperty Name="Time" ColumnName="Time" />
+                <ScalarProperty Name="Location" ColumnName="Location" />
+                <ScalarProperty Name="Url" ColumnName="Url" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="photoId" ColumnName="photoId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="photopersonmappings">
+            <EntityTypeMapping TypeName="momentsModel.photopersonmapping">
+              <MappingFragment StoreEntitySet="photopersonmapping">
+                <ScalarProperty Name="PersonId" ColumnName="PersonId" />
+                <ScalarProperty Name="PhotoId" ColumnName="PhotoId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

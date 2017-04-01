@@ -83,6 +83,12 @@
     <Compile Include="ORM\photo.cs">
       <DependentUpon>Moments.tt</DependentUpon>
     </Compile>
+    <Compile Include="ORM\photo1.cs">
+      <DependentUpon>Moments.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ORM\photopersonmapping.cs">
+      <DependentUpon>Moments.tt</DependentUpon>
+    </Compile>
     <Compile Include="ORM\phototag.cs">
       <DependentUpon>Moments.tt</DependentUpon>
     </Compile>

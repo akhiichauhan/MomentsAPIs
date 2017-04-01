@@ -15,6 +15,10 @@
         <AssociationConnector Association="momentsModel.photo_phototags" ManuallyRouted="false" />
         <AssociationConnector Association="momentsModel.user_Photos" ManuallyRouted="false" />
         <AssociationConnector Association="momentsModel.user_friend" ManuallyRouted="false" />
+        <EntityTypeShape EntityType="momentsModel.photo1" Width="1.5" PointX="0.75" PointY="8.125" />
+        <EntityTypeShape EntityType="momentsModel.photopersonmapping" Width="1.5" PointX="3" PointY="0.75" />
+        <AssociationConnector Association="momentsModel.Person_Mapping" />
+        <AssociationConnector Association="momentsModel.Photo_Mapping" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

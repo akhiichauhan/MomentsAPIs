@@ -12,20 +12,19 @@ namespace Moments.Data.MySqlDataSource.ORM
     using System;
     using System.Collections.Generic;
     
-    public partial class person
+    public partial class photo1
     {
-        public person()
+        public photo1()
         {
-            this.users = new HashSet<user>();
-            this.phototags = new HashSet<phototag>();
             this.photopersonmappings = new HashSet<photopersonmapping>();
         }
     
-        public int personId { get; set; }
-        public Nullable<System.DateTime> CreatedOn { get; set; }
+        public int photoId { get; set; }
+        public string Name { get; set; }
+        public string Url { get; set; }
+        public string Location { get; set; }
+        public Nullable<System.DateTime> Time { get; set; }
     
-        public virtual ICollection<user> users { get; set; }
-        public virtual ICollection<phototag> phototags { get; set; }
         public virtual ICollection<photopersonmapping> photopersonmappings { get; set; }
     }
 }
