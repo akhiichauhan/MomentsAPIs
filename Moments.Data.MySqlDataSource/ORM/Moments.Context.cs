@@ -25,7 +25,7 @@ namespace Moments.Data.MySqlDataSource.ORM
             throw new UnintentionalCodeFirstException();
         }
     
-        public DbSet<person> persons { get; set; }
+        public DbSet<person> people { get; set; }
         public DbSet<photo> photos { get; set; }
         public DbSet<phototag> phototags { get; set; }
         public DbSet<user> users { get; set; }

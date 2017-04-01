@@ -34,7 +34,7 @@
           <Key>
             <PropertyRef Name="tagId" />
           </Key>
-          <Property Name="tagId" Type="int" Nullable="false" />
+          <Property Name="tagId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="photoId" Type="int" />
           <Property Name="personId" Type="int" />
         </EntityType>
@@ -44,6 +44,7 @@
           </Key>
           <Property Name="userid" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="peopleId" Type="int" />
+          <Property Name="userIdentifier" Type="int" />
           <Property Name="CreatedDate" Type="datetime" Precision="0" />
           <Property Name="CreatedBy" Type="varchar" MaxLength="45" />
           <Property Name="UpdatedOn" Type="datetime" Precision="0" />
@@ -194,6 +195,7 @@
           <NavigationProperty Name="person" Relationship="Self.People_user" FromRole="user" ToRole="person" />
           <NavigationProperty Name="photos" Relationship="Self.user_Photos" FromRole="user" ToRole="photos" />
           <NavigationProperty Name="friends" Relationship="Self.user_friend" FromRole="user" ToRole="friends" />
+          <Property Name="userIdentifier" Type="Int32" />
         </EntityType>
         <EntityType Name="friend">
           <Key>
@@ -328,6 +330,7 @@
           <EntitySetMapping Name="users">
             <EntityTypeMapping TypeName="momentsModel.user">
               <MappingFragment StoreEntitySet="user">
+                <ScalarProperty Name="userIdentifier" ColumnName="userIdentifier" />
                 <ScalarProperty Name="userid" ColumnName="userid" />
                 <ScalarProperty Name="peopleId" ColumnName="peopleId" />
                 <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />

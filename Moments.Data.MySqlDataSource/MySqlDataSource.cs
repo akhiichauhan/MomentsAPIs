@@ -1,10 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.SqlClient;
 using System.Linq;
 using System.Threading.Tasks;
 using Moments.APIs.DataContract;
 using Moments.APIs.ServiceContract;
 using Moments.Data.MySqlDataSource.ORM;
+using MySql.Data.MySqlClient;
 
 namespace Moments.Data.MySqlDataSource
 {
@@ -18,26 +20,29 @@ namespace Moments.Data.MySqlDataSource
             {
                 using (momentsEntities context = new momentsEntities())
                 {
+                    
+                        //Save the information in person (master table)
+                        int personId = CreatePerson(context, user);
 
-                    //Save the information in person (master table)
-                    int personId = CreatePerson(context, user);
+                        //Save the data in user
+                        user newUser = new user();
+                        newUser.person = new person()
+                        {
+                            personId = personId
+                        };
+                        newUser.userIdentifier = int.Parse(user.UserId);
+                        newUser.FirstName = user.Name?.FirstName;
+                        newUser.LastName = user.Name?.LastName;
+                        newUser.emailId = user.Email;
+                        newUser.gender = user.Gender.ToString();
+                        newUser.friends = GetFriends(user.FriendsList);
 
-                    //Save the data in user
-                    user newUser = new user();
-                    newUser.person = new person()
-                    {
-                        personId = personId
-                    };
-                    newUser.FirstName = user.Name?.FirstName;
-                    newUser.LastName = user.Name?.LastName;
-                    newUser.emailId = user.Email;
-                    newUser.gender = user.Gender.ToString();
-                    newUser.friends = GetFriends(user.FriendsList);
+                        context.users.Add(newUser);
+                        context.SaveChanges();
 
-                    context.users.Add(newUser);
-                    context.SaveChanges();
-                    response.ExecutionData.Add(KeyStore.User.UserId, newUser.userid);
-                    response.ExecutionData.Add(KeyStore.User.PersonId, personId);
+                        response.ExecutionData.Add(KeyStore.User.UserId, newUser.userid);
+                        response.ExecutionData.Add(KeyStore.User.PersonId, personId);
+                    
                 }
 
             }
@@ -66,7 +71,7 @@ namespace Moments.Data.MySqlDataSource
             {
                CreatedOn = DateTime.Now
             };
-            context.persons.Add(person);
+            context.people.Add(person);
             context.SaveChanges();
             return person.personId;
         }
@@ -78,10 +83,11 @@ namespace Moments.Data.MySqlDataSource
             {
                 using (momentsEntities context = new momentsEntities())
                 {
-
+                    int userIdentifier = int.Parse(photoDetails.UserId);
+                    var userInDb = context.users.Where(u => u.userIdentifier == userIdentifier).Select(u => u).FirstOrDefault();
                     photo newPhoto = new photo
                     {
-                        user =new user() {userid = int.Parse(photoDetails.UserId)},
+                        user = userInDb,
                         location = photoDetails.Location,
                         url = photoDetails.PhotoUrl
                     };
@@ -119,7 +125,7 @@ namespace Moments.Data.MySqlDataSource
 
                     //Get the user photos from photos for the users or from the taged photos
                     photoUrls =
-                        context.photos.Where(phts => photoIds.Contains(phts.PhotoId) || (phts.user.userid== userIdAsInt))
+                        context.photos.Where(phts => photoIds.Contains(phts.PhotoId) || (phts.user.userIdentifier== userIdAsInt))
                             .Select(phts => phts.url)
                             .ToList();
 

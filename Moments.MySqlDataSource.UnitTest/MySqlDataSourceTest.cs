@@ -60,7 +60,7 @@ namespace Moments.MySqlDb.UnitTest
                 MySqlDataSource mySqlDatabase = new MySqlDataSource();
                 ExecutionResponse response = await mySqlDatabase.SavePhoto(new PhotosDetail()
                 {
-                    UserId = "1",
+                    UserId = "100",
                     Name = "Rahul Pawar",
                     PhotoUrl = "https://s3.amazonaws.com/momentsfirstgallery/testFolder/Desert.jpg"
                 });
@@ -80,8 +80,8 @@ namespace Moments.MySqlDb.UnitTest
                 MySqlDataSource mySqlDatabase = new MySqlDataSource();
                 ExecutionResponse response = await mySqlDatabase.GetPhotos(new User()
                 {
-                    UserId = "2",
-                    PersonId = "1"
+                    UserId = "100",
+                    PersonId = "2"
                 });
 
             }
@@ -99,8 +99,8 @@ namespace Moments.MySqlDb.UnitTest
                 MySqlDataSource mySqlDatabase = new MySqlDataSource();
                 ExecutionResponse response = await mySqlDatabase.SavePhotoMetadata(new PhotoMetadata()
                 {
-                    PhotoId = "2",
-                    PersonIds = new List<string>() {"1"}
+                    PhotoId = "1",
+                    PersonIds = new List<string>() {"2"}
                 });
 
             }
