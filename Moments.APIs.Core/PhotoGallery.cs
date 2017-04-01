@@ -127,9 +127,9 @@ namespace Moments.APIs.Core
             var enrollRequest = new { ImageUrl = imageUrl, PhotoId = photoId };
             using (var lambdaClient = new AmazonLambdaClient(accessKey, secretKey, RegionEndpoint.USEast1))
             {
-                lambdaClient.InvokeAsync(new Amazon.Lambda.Model.InvokeAsyncRequest
+               var response= lambdaClient.InvokeAsync(new Amazon.Lambda.Model.InvokeAsyncRequest
                 {
-                    FunctionName = "RekognitionHandler",  //Move in constant or config
+                    FunctionName = "RecognizeHandler",  //Move in constant or config
                     InvokeArgs = Newtonsoft.Json.JsonConvert.SerializeObject(enrollRequest),
                 });
             }
