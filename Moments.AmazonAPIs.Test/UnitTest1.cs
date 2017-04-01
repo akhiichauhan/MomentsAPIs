@@ -35,8 +35,8 @@ namespace Moments.AmazonAPIs.Test
         {
             try
             {
-                string awsAccessKey = "AKIAJ325ZADNS2SMMCQA";
-                string awsSecretKey = "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";
+                string awsAccessKey = "";
+                string awsSecretKey = "";
 
                 using (var client = new Amazon.Rekognition.AmazonRekognitionClient(awsAccessKey, awsSecretKey, RegionEndpoint.USEast1))
                 {
