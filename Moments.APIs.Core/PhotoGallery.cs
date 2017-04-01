@@ -10,6 +10,8 @@ using Amazon.S3.Model;
 using Moments.APIs.DataContract;
 using Moments.APIs.ServiceContract;
 using Moments.Data.MySqlDataSource;
+using Amazon.Lambda;
+using Amazon;
 
 namespace Moments.APIs.Core
 {
@@ -21,7 +23,7 @@ namespace Moments.APIs.Core
 
         public string BucketName { get; set; }
 
-        public static Dictionary<string, List<string>>  UserPhotoDictionary = new Dictionary<string, List<string>> ();
+        public static Dictionary<string, List<string>> UserPhotoDictionary = new Dictionary<string, List<string>>();
 
         public PhotoGallery()
         {
@@ -45,8 +47,11 @@ namespace Moments.APIs.Core
                 };
                 PutObjectResponse response2 = Client.PutObject(request);
 
-                photosDetail.PhotoUrl = "https://s3.amazonaws.com/" + BucketName +"/" + photoKey;
-                await DataSource.SavePhoto(photosDetail);
+                photosDetail.PhotoUrl = "https://s3.amazonaws.com/" + BucketName + "/" + photoKey;
+                var response = await DataSource.SavePhoto(photosDetail);
+                var photoId = response.ExecutionData[KeyStore.Photo.PhotoId];
+                RaisePhotoUpdatedNotification(photosDetail.UserId, photoId.ToString());
+                return response.Status == KeyStore.ExecutionStatus.Success;
             }
             catch (Exception ex)
             {
@@ -62,10 +67,10 @@ namespace Moments.APIs.Core
                 UserId = photosDetailRQ.UserId,
             });
 
-            if (photos.Status != KeyStore.ExecutionStatus.Success || photos.Errors!= null || !photos.ExecutionData.ContainsKey(KeyStore.Photo.PhotoUrls))
+            if (photos.Status != KeyStore.ExecutionStatus.Success || photos.Errors != null || !photos.ExecutionData.ContainsKey(KeyStore.Photo.PhotoUrls))
                 return null;
 
-            var photoUrls =  photos.ExecutionData[KeyStore.Photo.PhotoUrls] as List<string>;
+            var photoUrls = photos.ExecutionData[KeyStore.Photo.PhotoUrls] as List<string>;
 
             if (photoUrls == null)
                 return null;
@@ -73,14 +78,14 @@ namespace Moments.APIs.Core
             int nextPageNumber = 0;
 
             Int32.TryParse(photosDetailRQ.NextPageId, out nextPageNumber);
-        
-                return new PhotosDetailRS()
-                {
-                    CollectionId = "",
-                    PageSize = 10,
-                    TotalImages = photoUrls.Count,
-                    Photos = await GetPhotos(photoUrls, nextPageNumber)
-                };
+
+            return new PhotosDetailRS()
+            {
+                CollectionId = "",
+                PageSize = 10,
+                TotalImages = photoUrls.Count,
+                Photos = await GetPhotos(photoUrls, nextPageNumber)
+            };
         }
 
         public async Task<List<Photo>> GetPhotos(List<string> photoUrls, int nextPageNumber)
@@ -112,6 +117,22 @@ namespace Moments.APIs.Core
             }
 
             return photos;
+        }
+
+        private void RaisePhotoUpdatedNotification(string imageUrl, string photoId)
+        {
+            string accessKey = ConfigurationManager.AppSettings["AWSAccessKey"];
+            string secretKey = ConfigurationManager.AppSettings["AWSSecretKey"];
+
+            var enrollRequest = new { ImageUrl = imageUrl, PhotoId = photoId };
+            using (var lambdaClient = new AmazonLambdaClient(accessKey, secretKey, RegionEndpoint.USEast1))
+            {
+                lambdaClient.InvokeAsync(new Amazon.Lambda.Model.InvokeAsyncRequest
+                {
+                    FunctionName = "arn:RekognitionHandler",  //Move in constant or config
+                    InvokeArgs = Newtonsoft.Json.JsonConvert.SerializeObject(enrollRequest),
+                });
+            }
         }
     }
 }
