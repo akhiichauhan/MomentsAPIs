@@ -12,14 +12,14 @@ namespace Moments.Host.Controllers
     public class RegistrationController : ApiController
     {
         [Route("register")]
-        public async Task<IHttpActionResult> SaveUserData (UserRegistrationRQ userRegistrationRQ)
+        public async Task<IHttpActionResult> SaveUserData(UserRegistrationRQ userRegistrationRQ)
         {
             if (userRegistrationRQ == null)
                 throw new ArgumentNullException("userRegistrationRQ");
 
             IRegistration registration = new Registration();
-            await registration.SaveUserData(userRegistrationRQ);
-            return StatusCode(HttpStatusCode.NoContent);
+            var response = await registration.SaveUserData(userRegistrationRQ);
+            return Ok(response);
         }
     }
 }

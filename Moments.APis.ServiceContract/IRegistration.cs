@@ -5,7 +5,7 @@ namespace Moments.APIs.ServiceContract
 {
     public interface IRegistration
     {
-        Task<bool> SaveUserData(UserRegistrationRQ userRegistrationRQ);
+        Task<ExecutionResponse> SaveUserData(UserRegistrationRQ userRegistrationRQ);
 
         //SaveUserUpdateData.
     }
