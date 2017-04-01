@@ -1,5 +1,8 @@
 ﻿using System;
+using System.Configuration;
 using System.Threading.Tasks;
+using Amazon.Lambda;
+using Amazon.Runtime;
 using Moments.APIs.DataContract;
 using Moments.APIs.ServiceContract;
 using Moments.Data.MySqlDataSource;
@@ -19,5 +22,7 @@ namespace Moments.APIs.Core
             await DataSource.CreateUser(userRegistrationRQ.User);
             return true;
         }
+
+     
     }
 }
