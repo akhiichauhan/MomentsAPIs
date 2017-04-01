@@ -4,6 +4,12 @@ using System.Web.Script.Serialization;
 using System.Net.Http;
 using System.Net;
 using System.IO;
+using Amazon.Rekognition.Model.Internal.MarshallTransformations;
+using Amazon.Rekognition.Model;
+using System.Collections.Generic;
+using System.Threading.Tasks;
+using Amazon.Rekognition;
+using Amazon;
 
 namespace Moments.AmazonAPIs.Test
 {
@@ -11,24 +17,98 @@ namespace Moments.AmazonAPIs.Test
     public class UnitTest1
     {
         [TestMethod]
-        public void TestAmazonFareRekognitionAPI()
+        public void TestAmazonFaceRekognitionAPI()
         {
-            string url = "https://rekognition.us-west-2.amazonaws.com/";
-            var request = GetRequest();
-            var client = new AmazonClient().GetClient(request);
+            //string url = "https://rekognition.us-west-2.amazonaws.com/";
+            //var request = GetRequest();
+            //var client = new AmazonClient().GetClient(request);
 
-            var response = client.UploadString(url, request);
+            //var response = client.UploadString(url, request);
 
-            //using (Stream data = client.OpenRead(url))
-            //{
-            //    using (StreamReader reader = new StreamReader(data))
-            //    {
-            //        string s = reader.ReadToEnd();
-            //        reader.Close();
-            //    }
-            //    data.Close();
-            //}
+            TestFaceCompareAPIs();
+            //TestFaceDetectAPIs();
 
+        }
+
+
+        public  void TestFaceCompareAPIs()
+        {
+            string awsAccessKey = "";
+            string awsSecretKey = "";
+                        
+            using (var client = new Amazon.Rekognition.AmazonRekognitionClient(awsAccessKey, awsSecretKey, new AmazonRekognitionConfig()
+            {
+                LogMetrics=true,LogResponse=true,RegionEndpoint=RegionEndpoint.USEast1
+            } ))
+            {
+                var response =  client.CompareFaces(GetCompareFaceRequest());
+                               
+                List<CompareFacesMatch> faceMatches = response.FaceMatches;
+                ComparedSourceImageFace sourceImageFace = response.SourceImageFace;
+            }
+        }
+
+        public void TestFaceDetectAPIs()
+        {
+            string awsAccessKey = ""; 
+            string awsSecretKey = "";
+
+
+            using (var client = new Amazon.Rekognition.AmazonRekognitionClient(awsAccessKey, awsSecretKey, new AmazonRekognitionConfig()
+            {
+                LogMetrics = true,
+                LogResponse = true,
+                RegionEndpoint = RegionEndpoint.USEast1
+            }))
+            {
+                var response = client.DetectFaces(GetDetectFaceRequest());//.CompareFaces(GetCompareFaceRequest());
+
+                
+            }
+        }
+
+        private DetectFacesRequest GetDetectFaceRequest()
+        {
+            return new DetectFacesRequest
+            {
+                Image = new Image
+                {
+                    S3Object = new Amazon.Rekognition.Model.S3Object()
+                    {
+                        Bucket = "momentsfirstgallery",
+                        Name = "100-28bf0b60-9b65-4e80-9b40-ed55bab15c52.jpeg"
+                    },
+                },
+                Attributes =new List<string> { },
+            };
+        }
+
+        public Amazon.Rekognition.Model.CompareFacesRequest GetCompareFaceRequest()
+        {
+            return new Amazon.Rekognition.Model.CompareFacesRequest()
+            {
+                //SimilarityThreshold=90,
+                
+                TargetImage = new Amazon.Rekognition.Model.Image()
+                {
+                    S3Object = new Amazon.Rekognition.Model.S3Object()
+                    {
+                        Bucket = "momentsfirstgallery",
+                        Name = "100-28bf0b60-9b65-4e80-9b40-ed55bab15c52.jpeg"
+                    }
+                },
+                SourceImage = new Amazon.Rekognition.Model.Image
+                {
+                    //Bytes=
+                    S3Object = new Amazon.Rekognition.Model.S3Object
+                    {
+                        Bucket = "momentsfirstgallery",
+                        Name= "100-39c76e1e-8bc5-4252-822c-42454db88bc4.jpeg",
+                    },
+                },
+                             
+                
+            };
         }
 
         private string GetRequest()
