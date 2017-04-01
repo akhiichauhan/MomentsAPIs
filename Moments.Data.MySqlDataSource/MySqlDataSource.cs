@@ -123,7 +123,7 @@ namespace Moments.Data.MySqlDataSource
                             .Select(phts => phts.url)
                             .ToList();
 
-                    response.ExecutionData.Add(KeyStore.Photo.PhotoUrls,photoUrls);
+                    response.ExecutionData.Add(KeyStore.Photo.PhotoUrls, photoUrls);
 
                 }
 

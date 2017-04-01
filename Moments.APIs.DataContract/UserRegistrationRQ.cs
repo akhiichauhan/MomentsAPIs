@@ -5,7 +5,7 @@ namespace Moments.APIs.DataContract
 {
     public class UserRegistrationRQ
     {
-        private User User { get; set; }
+        public User User { get; set; }
     }
 
     public enum Gender
