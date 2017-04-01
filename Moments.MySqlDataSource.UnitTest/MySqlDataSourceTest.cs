@@ -81,7 +81,6 @@ namespace Moments.MySqlDb.UnitTest
                 ExecutionResponse response = await mySqlDatabase.GetPhotos(new User()
                 {
                     UserId = "100",
-                    PersonId = "2"
                 });
 
             }
