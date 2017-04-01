@@ -191,6 +191,7 @@
   <ItemGroup>
     <Compile Include="App_Start\JsonNetTextFormatter.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
+    <Compile Include="Controllers\DataSourceController.cs" />
     <Compile Include="Controllers\PhotoController.cs" />
     <Compile Include="Controllers\RegistrationController.cs" />
     <Compile Include="Global.asax.cs">

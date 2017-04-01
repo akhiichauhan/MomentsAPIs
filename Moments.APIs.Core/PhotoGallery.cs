@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Configuration;
 using System.Drawing.Imaging;
 using System.IO;
+using System.Linq;
 using System.Threading.Tasks;
 using Amazon.S3;
 using Amazon.S3.Model;
@@ -19,6 +20,8 @@ namespace Moments.APIs.Core
         public IDataSource DataSource { get; set; }
 
         public string BucketName { get; set; }
+
+        public static Dictionary<string, List<string>>  UserPhotoDictionary = new Dictionary<string, List<string>> ();
 
         public PhotoGallery()
         {
@@ -52,46 +55,63 @@ namespace Moments.APIs.Core
             return true;
         }
 
-        public async Task<List<PhotosDetailRS>> GetPhotosList(PhotosDetailRQ photosDetailRQ)
+        public async Task<PhotosDetailRS> GetPhotosList(PhotosDetailRQ photosDetailRQ)
         {
             var photos = await DataSource.GetPhotos(new User()
             {
                 UserId = photosDetailRQ.UserId,
-                //Email = ,
-                //FriendsList = ,
-                //Gender = ,
-                //Name = ,
-                //PersonId = ,
-                //ProfilePic = 
             });
 
-            var photoDetails = new List<PhotosDetailRS>();
+            if (photos.Status != KeyStore.ExecutionStatus.Success || photos.Errors!= null || !photos.ExecutionData.ContainsKey(KeyStore.Photo.PhotoUrls))
+                return null;
 
-            var photoUrls =  photos.ExecutionData[KeyStore.Photo.PhotoUrls];
+            var photoUrls =  photos.ExecutionData[KeyStore.Photo.PhotoUrls] as List<string>;
 
-            return new List<PhotosDetailRS>()
-            {
-                new PhotosDetailRS()
+            if (photoUrls == null)
+                return null;
+
+            int nextPageNumber = 0;
+
+            Int32.TryParse(photosDetailRQ.NextPageId, out nextPageNumber);
+        
+                return new PhotosDetailRS()
                 {
-                    FriendsList = null,
                     CollectionId = "",
-                    ImageUrl = "",
-                    PageSize = 0,
-                    TotalImages = 0
-                }
-            };
+                    PageSize = 10,
+                    TotalImages = photoUrls.Count,
+                    Photos = await GetPhotos(photoUrls, nextPageNumber)
+                };
         }
 
+        public async Task<List<Photo>> GetPhotos(List<string> photoUrls, int nextPageNumber)
+        {
+            var photos = new List<Photo>();
 
-        //public static Stream GenerateStreamFromString(string s)
-        //{
-        //    MemoryStream stream = new MemoryStream();
-        //    StreamWriter writer = new StreamWriter(stream);
-        //    writer.Write(s);
-        //    writer.Flush();
-        //    stream.Position = 0;
-        //    return stream;
-        //}
+            try
+            {
+                foreach (var photoUrl in photoUrls)
+                {
+                    photos.Add(new Photo()
+                    {
+                        ImageUrl = photoUrl,
+                        FriendsList = null
+                    });
+                }
 
+                //int numberOfPhotosToBePicked = 10;
+
+
+                //int rangeEnd = (nextPageNumber + 1)* numberOfPhotosToBePicked;
+                //int rangeStart = rangeEnd - numberOfPhotosToBePicked;
+
+                //return photos.Skip(rangeStart).Take(numberOfPhotosToBePicked).ToList();
+            }
+            catch (Exception ex)
+            {
+                //supress
+            }
+
+            return photos;
+        }
     }
 }

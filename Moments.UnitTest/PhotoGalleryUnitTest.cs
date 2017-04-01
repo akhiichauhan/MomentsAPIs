@@ -14,7 +14,7 @@ namespace Moments.UnitTest
     public class PhotoGalleryUnitTest
     {
         [Fact]
-        public async void SavePhotoMetadata_Success()
+        public async void SavePhotoDetail_Success()
         {
             try
             {
@@ -27,12 +27,38 @@ namespace Moments.UnitTest
             }
         }
 
+        [Fact]
+        public async void GetPhotos_Success()
+        {
+            try
+            {
+                PhotoGallery photoGallery = new PhotoGallery();
+                await photoGallery.GetPhotos(GetUrls(13), 1);
+            }
+            catch (Exception ex)
+            {
+                Assert.False(ex.Message != null);
+            }
+        }
+
+        private List<string> GetUrls(int length)
+        {
+            var list = new List<string>();
+
+            for (int index = 0; index < length; index++)
+            {
+                list.Add(index.ToString());
+            }
+
+            return list;
+        }
+
         private PhotosDetail GetPhotoDetail()
         {
             return new PhotosDetail()
             {
                 Photos = new FileStream(@"C:\Users\Public\Pictures\Sample Pictures\Koala.jpg", FileMode.Open),
-                UserId = "user1",
+                UserId = "100",
         };
 
         }
