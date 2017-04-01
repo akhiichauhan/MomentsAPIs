@@ -13,8 +13,8 @@ namespace Moments.Host
             config.MapHttpAttributeRoutes();
             SetAppDependencyInjection();
             //config.EnableCors();
-            //var corsAttr = new EnableCorsAttribute("http://example.com", "*", "*");
-            //config.EnableCors(corsAttr);
+            var corsAttr = new EnableCorsAttribute("*", "*", "*");
+            config.EnableCors(corsAttr);
             config.Formatters.Clear();
             config.Formatters.Insert(0, new JsonNetTextFormatter());
         }

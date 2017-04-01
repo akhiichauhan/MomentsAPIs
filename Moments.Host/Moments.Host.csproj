@@ -201,7 +201,6 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="App_Start\CorsHandler.cs" />
     <Compile Include="App_Start\JsonNetTextFormatter.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\DataSourceController.cs" />
