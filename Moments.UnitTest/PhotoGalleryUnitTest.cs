@@ -57,7 +57,7 @@ namespace Moments.UnitTest
         {
             return new PhotosDetail()
             {
-                Photos = new FileStream(@"C:\Users\Public\Pictures\Sample Pictures\Koala.jpg", FileMode.Open),
+                Photos = new FileStream(@"C:\Users\Public\Pictures\Sample Pictures\hritik.jpg", FileMode.Open),
                 UserId = "100",
         };
 

@@ -37,7 +37,8 @@ namespace Moments.UnitTest
                         "10001",
                         "10002"
                     },
-                    UserId = "100"
+                    UserId = "100",
+                    ProfilePic = "http://starsunfolded.1ygkv60km.netdna-cdn.com/wp-content/uploads/2013/08/hrithik-roshan1.jpg"
                 },
             };
         }
