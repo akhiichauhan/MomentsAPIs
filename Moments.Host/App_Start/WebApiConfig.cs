@@ -1,4 +1,5 @@
 ﻿using System.Web.Http;
+using System.Web.Http.Cors;
 using Microsoft.Practices.ServiceLocation;
 using Newtonsoft.Json.Converters;
 using Newtonsoft.Json.Serialization;
@@ -11,7 +12,9 @@ namespace Moments.Host
         {
             config.MapHttpAttributeRoutes();
             SetAppDependencyInjection();
-
+            //config.EnableCors();
+            //var corsAttr = new EnableCorsAttribute("http://example.com", "*", "*");
+            //config.EnableCors(corsAttr);
             config.Formatters.Clear();
             config.Formatters.Insert(0, new JsonNetTextFormatter());
         }
