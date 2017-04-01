@@ -8,10 +8,10 @@ using Moments.APIs.Core;
 
 namespace Moments.Host.Controllers
 {
-    [RoutePrefix("api/register")]
+    [RoutePrefix("api/user")]
     public class RegistrationController : ApiController
     {
-        [Route("user")]
+        [Route("register")]
         public async Task<IHttpActionResult> SaveUserData (UserRegistrationRQ userRegistrationRQ)
         {
             if (userRegistrationRQ == null)
